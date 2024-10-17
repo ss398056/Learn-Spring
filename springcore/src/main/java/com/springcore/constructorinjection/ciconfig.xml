@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:p="http://www.springframework.org/schema/p"
+xmlns:c="http://www.springframework.org/schema/c"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!--  
+	<bean class="com.springcore.constructorinjection.Certi" name="c">
+		<constructor-arg value="Android using java and kotlin" />
+		
+	</bean>
+	-->
+	
+	<!-- constructor value injection using c schema -->
+	<bean class="com.springcore.constructorinjection.Certi" name="c" c:name="Python programming" c:duration="3months" />
+		
+	<bean class="com.springcore.constructorinjection.Person" name="person">
+		<constructor-arg>
+			<value>Sandeep Singh</value>
+		</constructor-arg>
+		
+		<constructor-arg value="12" />
+		
+		<constructor-arg ref="c" />
+		
+		<constructor-arg>
+			<list>
+				<value>12</value>
+				<value>45</value>
+				<value>84</value>
+				<value>33</value>
+			</list>
+		</constructor-arg>
+	</bean>
+	
+	<!-- This bean using for remove ambiguity of constructor call -->
+	<bean class="com.springcore.constructorinjection.Addition" name="add">
+		<constructor-arg value="25" type="int" />
+		<constructor-arg value="92" type="int" />
+	</bean>
+	
+</beans>

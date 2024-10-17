@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:p="http://www.springframework.org/schema/p"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- Enable Autowired annotation using xml configuration -->
+	<context:annotation-config />
+	
+	<bean class="com.springcore.autowire.annotations.Address" name="address" >
+		<property name="flatNo" value="302 C3" />
+		<property name="street" value="Chipyana Buzurg" />
+		<property name="city" value="Ghaziabad" />
+		<property name="state" value="Uttar Pradesh" />
+		<property name="pincode" value="201009" />
+	</bean>
+	
+	<bean class="com.springcore.autowire.annotations.Address" name="address2" >
+		<property name="flatNo" value="16 killokari" />
+		<property name="street" value="Maharanibagh" />
+		<property name="city" value="Delhi" />
+		<property name="state" value="New Delhi" />
+		<property name="pincode" value="110014" />
+	</bean>
+	
+	<bean class="com.springcore.autowire.annotations.Emp" name="emp1" />	
+	
+</beans>

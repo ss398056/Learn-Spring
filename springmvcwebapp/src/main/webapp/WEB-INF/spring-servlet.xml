@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:mvc="http://www.springframework.org/schema/mvc"  
+    xsi:schemaLocation="   
+        http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans.xsd   
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context.xsd   
+        http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd"> 
+       
+       	<mvc:annotation-driven />
+        <mvc:resources location="/WEB-INF/resources/" mapping="/resources/**" />
+       <context:component-scan base-package="spring" />
+       <tx:annotation-driven/>
+       
+       <mvc:interceptors>
+       		<mvc:interceptor>
+       			<mvc:mapping path="/welcomeform"/>
+       			<bean class="spring.mvc.controller.MyInterceptor" name="interceptor" />
+       		</mvc:interceptor>
+       	</mvc:interceptors>
+       	
+       
+       
+	<!--  Step 2: View Resolver Configuration  -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="WEB-INF/Views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<!-- This is example of InternalResourceViewResolver set filename -->
+	<!-- url = WEB-INF/Views/first.jsp -->
+	
+	<!-- Note: CommonsMultipartResolver is used in below spring 6.0 versions -->
+	<!-- Configure StandardServletMultipartResolver for resolve files  -->
+	<bean name="multipartResolver" 
+	class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />	
+		
+		
+	<!-- Database connection configuration with hibernate -->
+	<!-- This is DataSource -->
+	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" name="ds" >
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3305/springtest" />
+		<property name="username" value="root"/>
+		<property name="password" value="" />
+	</bean>
+	
+	<!-- This is LocalSessionFactoryBean -->
+	<bean class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" name="factory" >
+		<property name="dataSource" ref="ds" />
+		<property name="annotatedClasses">
+			<list>
+				<value>spring.mvc.model.User</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		
+	</bean>
+	  
+	<!-- This is HibernateTemplete -->
+	<bean class="org.springframework.orm.hibernate5.HibernateTemplate" name="hibernateTemplate">
+		<property name="sessionFactory" ref="factory" />
+	</bean>
+	
+	<bean class="org.springframework.orm.hibernate5.HibernateTransactionManager" name="transactionManager">
+		<property name="sessionFactory" ref="factory" />
+	</bean>
+	
+	<!-- Spring Email Sender Bean Configuration -->
+	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl" name="mailSender" >
+		<property name="host" value="smtp.gmail.com" />
+        <property name="port" value="465" />
+        <property name="username" value="sandeepproject76@gmail.com" />
+        <property name="password" value="Sandeep@2898" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.debug">true</prop>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+                <prop key="mail.smtp.socketFactory.port">465</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+
+            </props>
+        </property>
+	</bean>
+	
+</beans>
+
